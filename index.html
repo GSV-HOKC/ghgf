@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
 <meta charset="utf-8">
@@ -105,6 +105,90 @@ footer{border-top:1px solid rgba(255,255,255,.05);padding:46px 0 34px;margin-top
 #progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--grad);z-index:200;box-shadow:0 0 12px rgba(124,109,240,.4)}
 .star-rain{position:fixed;top:-10px;font-size:16px;animation:fall linear infinite;z-index:0;pointer-events:none;opacity:.3}
 @keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
+
+/* ===== МУЗЫКАЛЬНЫЙ ПЛЕЕР ===== */
+.music-player {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 150;
+  background: rgba(20, 20, 34, 0.85);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 50px;
+  padding: 10px 18px 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  transition: all 0.3s;
+}
+.music-player:hover {
+  border-color: rgba(179,136,255,0.15);
+}
+.music-player .play-btn {
+  background: var(--grad);
+  border: none;
+  color: #0a0a12;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s;
+}
+.music-player .play-btn:hover {
+  transform: scale(1.08);
+}
+.music-player .track-info {
+  font-size: 12px;
+  color: var(--mut);
+  font-weight: 300;
+}
+.music-player .track-info .name {
+  color: var(--txt);
+  font-weight: 500;
+}
+.music-player .volume {
+  width: 50px;
+  height: 3px;
+  -webkit-appearance: none;
+  background: rgba(255,255,255,0.08);
+  border-radius: 2px;
+  outline: none;
+}
+.music-player .volume::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--lavender);
+  cursor: pointer;
+}
+.music-player .autoplay-badge {
+  font-size: 8px;
+  background: rgba(179,136,255,0.15);
+  color: var(--lavender);
+  padding: 2px 8px;
+  border-radius: 10px;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+}
+
+@media(max-width:600px){
+  .music-player {
+    bottom: 16px;
+    right: 16px;
+    padding: 8px 12px 8px 10px;
+  }
+  .music-player .track-info { display: none; }
+  .music-player .volume { width: 30px; }
+  .music-player .autoplay-badge { display: none; }
+}
+
 @media(max-width:900px){
   nav.menu,.nav .btn.desk{display:none}
   .burger{display:block}
@@ -128,6 +212,20 @@ footer{border-top:1px solid rgba(255,255,255,.05);padding:46px 0 34px;margin-top
 <div class="cursor-glow" id="glow"></div>
 
 <div id="stars-container"></div>
+
+<!-- ===== МУЗЫКАЛЬНЫЙ ПЛЕЕР С АВТОЗАПУСКОМ ===== -->
+<div class="music-player" id="musicPlayer">
+  <button class="play-btn" id="playBtn">⏸</button>
+  <div class="track-info">
+    <span class="name">Miyagi · По уши</span>
+  </div>
+  <span class="autoplay-badge">▶ автозапуск</span>
+  <input class="volume" id="volumeSlider" type="range" min="0" max="1" step="0.05" value="0.25">
+  <audio id="bgMusic" loop preload="auto">
+    <!-- Песня должна лежать в той же папке что и index.html -->
+    <source src="miyagi.mp3" type="audio/mpeg">
+  </audio>
+</div>
 
 <header id="hdr">
   <div class="wrap nav">
@@ -175,29 +273,27 @@ footer{border-top:1px solid rgba(255,255,255,.05);padding:46px 0 34px;margin-top
         <circle cx="770" cy="190" r="180" fill="#7c6df0" opacity="0.15" filter="url(#soft)"/>
         <circle cx="300" cy="440" r="150" fill="#b388ff" opacity="0.12" filter="url(#soft)"/>
         
-        <!-- Две фигуры — Коля и Аня -->
-        <circle cx="420" cy="300" r="60" fill="url(#g1)" opacity="0.15"/>
-        <circle cx="700" cy="300" r="60" fill="url(#g1)" opacity="0.15"/>
+        <!-- Большое сердце -->
+        <g transform="translate(560,280)">
+          <path d="M0,-80 C-40,-120 -120,-100 -120,-40 C-120,20 -20,80 0,100 C20,80 120,20 120,-40 C120,-100 40,-120 0,-80 Z" fill="url(#g1)" opacity="0.3"/>
+          <path d="M0,-60 C-30,-90 -90,-75 -90,-30 C-90,15 -15,60 0,75 C15,60 90,15 90,-30 C90,-75 30,-90 0,-60 Z" fill="url(#g1)" opacity="0.6"/>
+          <path d="M0,-40 C-20,-60 -60,-50 -60,-20 C-60,10 -10,40 0,50 C10,40 60,10 60,-20 C60,-50 20,-60 0,-40 Z" fill="url(#g1)"/>
+        </g>
         
-        <circle cx="420" cy="300" r="40" fill="url(#g1)" opacity="0.3"/>
-        <circle cx="700" cy="300" r="40" fill="url(#g1)" opacity="0.3"/>
-        
-        <circle cx="420" cy="300" r="25" fill="url(#g1)" opacity="0.6"/>
-        <circle cx="700" cy="300" r="25" fill="url(#g1)" opacity="0.6"/>
-        
-        <!-- Сердечко между ними -->
-        <path d="M540,280 C530,260 500,265 500,285 C500,305 540,330 540,330 C540,330 580,305 580,285 C580,265 550,260 540,280 Z" fill="url(#g1)" opacity="0.7"/>
-        
-        <!-- Звёздочки -->
-        <text x="200" y="150" font-size="30" fill="#b388ff" opacity="0.5">✦</text>
-        <text x="850" y="140" font-size="24" fill="#ffab91" opacity="0.4">✦</text>
-        <text x="150" y="420" font-size="20" fill="#7c6df0" opacity="0.3">✦</text>
-        <text x="950" y="440" font-size="28" fill="#b388ff" opacity="0.4">✦</text>
+        <!-- Маленькие сердечки -->
+        <text x="180" y="180" font-size="28" fill="#b388ff" opacity="0.5">♥</text>
+        <text x="820" y="160" font-size="24" fill="#ffab91" opacity="0.4">♥</text>
+        <text x="140" y="400" font-size="20" fill="#7c6df0" opacity="0.3">♥</text>
+        <text x="900" y="420" font-size="26" fill="#b388ff" opacity="0.4">♥</text>
+        <text x="280" y="120" font-size="18" fill="#ffab91" opacity="0.3">♥</text>
+        <text x="780" y="480" font-size="22" fill="#7c6df0" opacity="0.3">♥</text>
 
-        <rect x="350" y="460" width="420" height="60" rx="14" fill="#11111f"/>
-        <rect x="350" y="460" width="420" height="60" rx="14" fill="#ffffff" opacity="0.04"/>
-        <rect x="350" y="460" width="420" height="60" rx="14" fill="none" stroke="#ffffff" stroke-opacity="0.06"/>
-        <text x="560" y="498" font-family="Sora,sans-serif" font-size="22" font-weight="700" fill="url(#g1)" text-anchor="middle">Коля 🤝 Аня — навсегда 💜</text>
+        <!-- ДОБРЫЕ СЛОВА -->
+        <rect x="260" y="460" width="600" height="65" rx="14" fill="#11111f"/>
+        <rect x="260" y="460" width="600" height="65" rx="14" fill="#ffffff" opacity="0.04"/>
+        <rect x="260" y="460" width="600" height="65" rx="14" fill="none" stroke="#ffffff" stroke-opacity="0.06"/>
+        <text x="560" y="492" font-family="Sora,sans-serif" font-size="18" font-weight="600" fill="url(#g1)" text-anchor="middle" letter-spacing="2">ТЫ — ЛУЧШАЯ СЕСТРА НА СВЕТЕ</text>
+        <text x="560" y="512" font-family="Inter,sans-serif" font-size="13" fill="#8a7aaa" text-anchor="middle" letter-spacing="1">Спасибо, что ты есть, Аня 💜</text>
       </svg>
     </div>
   </div>
@@ -277,7 +373,7 @@ footer{border-top:1px solid rgba(255,255,255,.05);padding:46px 0 34px;margin-top
   </div>
 </section>
 
-<!-- ЗА ЧТО Я ЛЮБЛЮ АНЮ -->
+<!-- ЗА ЧТО Я ЛЮБЛЮ -->
 <section id="qualities">
   <div class="wrap">
     <div class="sec-head reveal">
@@ -337,7 +433,7 @@ footer{border-top:1px solid rgba(255,255,255,.05);padding:46px 0 34px;margin-top
   </div>
 </section>
 
-<!-- ПИСЬМО КОЛИ АНЕ -->
+<!-- ПИСЬМО -->
 <section id="letter">
   <div class="wrap">
     <div class="contact reveal">
@@ -366,6 +462,9 @@ footer{border-top:1px solid rgba(255,255,255,.05);padding:46px 0 34px;margin-top
         <div class="chan" style="margin-top:24px">
           <span>💜 Твой брат, Коля</span>
         </div>
+        <a class="btn btn-primary" href="https://t.me/GSV_HOKC" target="_blank" style="margin-top:16px;display:inline-flex;width:100%;justify-content:center;font-size:16px">
+          ✈️ Написать в Telegram
+        </a>
       </div>
       <div>
         <form onsubmit="alert('💜 Аня, спасибо! Ты — лучшая сестра на свете!'); return false;">
@@ -382,7 +481,7 @@ footer{border-top:1px solid rgba(255,255,255,.05);padding:46px 0 34px;margin-top
   </div>
 </section>
 
-<!-- ВОПРОСЫ -->
+<!-- FAQ -->
 <section id="faq">
   <div class="wrap" style="max-width:840px">
     <div class="sec-head reveal">
@@ -409,12 +508,13 @@ footer{border-top:1px solid rgba(255,255,255,.05);padding:46px 0 34px;margin-top
       <a href="#moments">Моменты</a>
       <a href="#qualities">Качества</a>
       <a href="#letter">Письмо</a>
+      <a href="https://t.me/GSV_HOKC" target="_blank">✈️ Telegram</a>
     </div>
   </div>
 </footer>
 
 <script>
-/* === Падающие звёздочки === */
+/* === ПАДАЮЩИЕ ЗВЁЗДОЧКИ === */
 (function(){
   var container = document.getElementById('stars-container');
   if(!container) return;
@@ -432,7 +532,71 @@ footer{border-top:1px solid rgba(255,255,255,.05);padding:46px 0 34px;margin-top
   }
 })();
 
-/* === Свечение за курсором === */
+/* === МУЗЫКА — АВТОЗАПУСК === */
+(function(){
+  var audio = document.getElementById('bgMusic');
+  var playBtn = document.getElementById('playBtn');
+  var volumeSlider = document.getElementById('volumeSlider');
+  var isPlaying = false;
+  var autoPlayAttempted = false;
+
+  // Устанавливаем громкость
+  audio.volume = 0.25;
+
+  // Пытаемся запустить автоматически при загрузке
+  function tryAutoPlay() {
+    if (autoPlayAttempted) return;
+    autoPlayAttempted = true;
+    
+    audio.play().then(function() {
+      isPlaying = true;
+      playBtn.textContent = '⏸';
+      console.log('🎵 Музыка запущена автоматически');
+    }).catch(function(e) {
+      console.log('Автозапуск заблокирован браузером, ждём клик');
+      // Если автозапуск заблокирован — запустим по клику
+      document.addEventListener('click', function startOnClick() {
+        audio.play().then(function() {
+          isPlaying = true;
+          playBtn.textContent = '⏸';
+        }).catch(function(){});
+        document.removeEventListener('click', startOnClick);
+      }, { once: true });
+    });
+  }
+
+  // Запускаем при загрузке страницы
+  tryAutoPlay();
+
+  // Кнопка play/pause
+  playBtn.addEventListener('click', function(){
+    if(isPlaying){
+      audio.pause();
+      playBtn.textContent = '▶';
+      isPlaying = false;
+    } else {
+      audio.play().then(function() {
+        playBtn.textContent = '⏸';
+        isPlaying = true;
+      }).catch(function(){});
+    }
+  });
+
+  // Регулировка громкости
+  volumeSlider.addEventListener('input', function(){
+    audio.volume = this.value;
+  });
+
+  // Если музыка закончилась — перезапускаем
+  audio.addEventListener('ended', function(){
+    audio.currentTime = 0;
+    audio.play().catch(function(){});
+  });
+
+  console.log('🎵 Плеер готов. Файл должен лежать в папке как miyagi.mp3');
+})();
+
+/* === СВЕЧЕНИЕ ЗА КУРСОРОМ === */
 (function(){
   var g=document.getElementById('glow'); if(!g) return;
   if(window.matchMedia && window.matchMedia('(pointer:coarse)').matches){ g.style.display='none'; return; }
@@ -441,14 +605,14 @@ footer{border-top:1px solid rgba(255,255,255,.05);padding:46px 0 34px;margin-top
   (function loop(){ cx+=(x-cx)*0.12; cy+=(y-cy)*0.12; g.style.left=cx+'px'; g.style.top=cy+'px'; requestAnimationFrame(loop); })();
 })();
 
-/* === Шапка === */
+/* === ШАПКА === */
 (function(){
   var h=document.getElementById('hdr');
   function onScroll(){ if(window.scrollY>10) h.classList.add('scrolled'); else h.classList.remove('scrolled'); }
   onScroll(); window.addEventListener('scroll',onScroll,{passive:true});
 })();
 
-/* === Появление при скролле === */
+/* === ПОЯВЛЕНИЕ ПРИ СКРОЛЛЕ === */
 (function(){
   var els=document.querySelectorAll('.reveal');
   if(!('IntersectionObserver' in window)){ els.forEach(function(e){e.classList.add('in');}); return; }
@@ -456,10 +620,10 @@ footer{border-top:1px solid rgba(255,255,255,.05);padding:46px 0 34px;margin-top
   els.forEach(function(e){ io.observe(e); });
 })();
 
-/* === Прогресс === */
+/* === ПРОГРЕСС === */
 (function(){var p=document.getElementById('progress');if(!p)return;function u(){var h=document.documentElement,sc=h.scrollTop||document.body.scrollTop,max=h.scrollHeight-h.clientHeight;p.style.width=(max>0?sc/max*100:0)+'%';}u();addEventListener('scroll',u,{passive:true});addEventListener('resize',u);})();
 
-/* === 3D-наклон === */
+/* === 3D-НАКЛОН === */
 (function(){
   if(matchMedia('(prefers-reduced-motion:reduce)').matches||matchMedia('(pointer:coarse)').matches)return;
   document.querySelectorAll('.card,.moment,.pstep').forEach(function(el){
@@ -472,7 +636,7 @@ footer{border-top:1px solid rgba(255,255,255,.05);padding:46px 0 34px;margin-top
   });
 })();
 
-/* === Параллакс === */
+/* === ПАРАЛЛАКС === */
 (function(){var m=document.querySelector('.heromock');if(!m||matchMedia('(pointer:coarse)').matches)return;m.style.transition='transform .25s ease-out';addEventListener('mousemove',function(e){var x=e.clientX/innerWidth-.5,y=e.clientY/innerHeight-.5;m.style.transform='perspective(1200px) rotateX('+(-y*2.5)+'deg) rotateY('+(x*2.5)+'deg)';});})();
 </script>
 </body>

@@ -1,0 +1,479 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Для Ани 💜</title>
+<style>
+:root{
+  --bg:#0a0a14; --bg2:#141422; --panel:rgba(255,255,255,.045); --panel2:rgba(255,255,255,.07);
+  --stroke:rgba(255,255,255,.08); --stroke2:rgba(255,255,255,.15);
+  --txt:#f0edff; --mut:#b8b0d0; --lavender:#b388ff; --periwinkle:#7c6df0; --peach:#ffab91;
+  --grad:linear-gradient(135deg,#b388ff 0%,#7c6df0 40%,#ffab91 100%);
+  --display:'Sora',system-ui,Segoe UI,sans-serif; --body:'Inter',system-ui,Segoe UI,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--body);background:var(--bg);color:var(--txt);line-height:1.6;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+h1,h2,h3{font-family:var(--display);font-weight:800;letter-spacing:-.02em;line-height:1.05;text-wrap:balance}
+p{text-wrap:pretty}
+.grad{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.eyebrow{display:inline-block;font-family:var(--display);font-weight:600;font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--lavender);padding:7px 14px;border:1px solid rgba(179,136,255,.25);border-radius:100px;background:rgba(179,136,255,.08)}
+.muted{color:var(--mut)}
+.bgfx{position:fixed;inset:0;z-index:-2;overflow:hidden;background:radial-gradient(1200px 700px at 80% -10%,rgba(124,109,240,.12),transparent 60%),radial-gradient(900px 600px at 0% 20%,rgba(255,171,145,.08),transparent 55%),var(--bg)}
+.blob{position:fixed;border-radius:50%;filter:blur(90px);opacity:.4;z-index:-1;pointer-events:none}
+.b1{width:520px;height:520px;background:#7c6df0;top:-120px;right:-80px;animation:float1 18s ease-in-out infinite;opacity:.2}
+.b2{width:460px;height:460px;background:#b388ff;bottom:-160px;left:-100px;animation:float2 22s ease-in-out infinite;opacity:.15}
+.b3{width:360px;height:360px;background:#ffab91;top:40%;left:55%;animation:float1 26s ease-in-out infinite;opacity:.12}
+@keyframes float1{0%,100%{transform:translate(0,0)}50%{transform:translate(-40px,50px)}}
+@keyframes float2{0%,100%{transform:translate(0,0)}50%{transform:translate(50px,-40px)}}
+.grid-ov{position:fixed;inset:0;z-index:-1;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,.015) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.015) 1px,transparent 1px);background-size:56px 56px;mask-image:radial-gradient(circle at 50% 30%,#000,transparent 80%)}
+.cursor-glow{position:fixed;width:380px;height:380px;border-radius:50%;background:radial-gradient(circle,rgba(179,136,255,.08),transparent 65%);transform:translate(-50%,-50%);pointer-events:none;z-index:1;transition:opacity .3s;mix-blend-mode:screen}
+header{position:sticky;top:0;z-index:100;transition:background .3s,border-color .3s}
+header.scrolled{background:rgba(10,10,20,.72);backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,.05)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:74px;gap:20px}
+.logo{font-family:var(--display);font-weight:800;font-size:20px;display:flex;align-items:center;gap:10px}
+.logo .mark{width:34px;height:34px;border-radius:10px;background:var(--grad);display:grid;place-items:center;font-size:18px;color:#0a0a12;font-weight:800;box-shadow:0 6px 20px rgba(124,109,240,.3)}
+.logo small{display:block;font-family:var(--body);font-weight:500;font-size:11px;letter-spacing:.04em;color:var(--mut);margin-top:-2px}
+nav.menu{display:flex;gap:28px;font-size:15px;font-weight:500}
+nav.menu a{color:var(--mut);transition:color .2s}nav.menu a:hover{color:var(--lavender)}
+.btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--display);font-weight:600;font-size:15px;padding:13px 24px;border-radius:12px;cursor:pointer;border:1px solid transparent;transition:transform .15s,box-shadow .25s;white-space:nowrap}
+.btn-primary{background:var(--grad);color:#0a0a12;box-shadow:0 10px 30px rgba(124,109,240,.25)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 16px 44px rgba(124,109,240,.4)}
+.btn-ghost{background:var(--panel);color:var(--txt);border-color:rgba(255,255,255,.12)}
+.btn-ghost:hover{background:var(--panel2);transform:translateY(-2px)}
+.burger{display:none;background:none;border:none;color:var(--txt);font-size:26px;cursor:pointer}
+.mobmenu{display:none;flex-direction:column;gap:4px;padding:10px 0 18px}
+.mobmenu.open{display:flex}
+.mobmenu a{padding:11px 6px;color:var(--mut);font-weight:600;border-top:1px solid rgba(255,255,255,.05)}
+.hero{padding:90px 0 70px;position:relative;text-align:center}
+.hero .eyebrow{margin-bottom:26px}
+.hero h1{font-size:clamp(38px,6.4vw,76px);max-width:15ch;margin:0 auto}
+.hero p.lead{font-size:clamp(17px,2vw,21px);color:var(--mut);max-width:60ch;margin:26px auto 36px}
+.hero .cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.heromock{margin-top:64px;border:1px solid rgba(255,255,255,.08);border-radius:20px;overflow:hidden;background:var(--panel);box-shadow:0 40px 100px rgba(0,0,0,.5)}
+.heromock .bar{display:flex;gap:7px;padding:13px 16px;border-bottom:1px solid rgba(255,255,255,.05);background:rgba(255,255,255,.02)}
+.heromock .bar i{width:11px;height:11px;border-radius:50%;background:#3a3a52}
+.heromock svg{display:block;width:100%;height:auto}
+section{padding:84px 0;position:relative}
+.sec-head{max-width:680px;margin:0 auto 50px;text-align:center}
+.sec-head h2{font-size:clamp(28px,4vw,46px);margin-top:16px}
+.sec-head p{color:var(--mut);font-size:18px;margin-top:14px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.stat{padding:30px 26px;border:1px solid rgba(255,255,255,.08);border-radius:18px;background:var(--panel);backdrop-filter:blur(8px);text-align:center}
+.stat b{font-family:var(--display);font-size:42px;font-weight:800;display:block}
+.stat span{color:var(--mut);font-size:15px}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.card{padding:30px;border:1px solid rgba(255,255,255,.08);border-radius:20px;background:var(--panel);backdrop-filter:blur(8px);transition:transform .25s,border-color .25s,background .25s;text-align:center}
+.card:hover{transform:translateY(-6px);border-color:rgba(179,136,255,.25);background:var(--panel2)}
+.card .ico{width:54px;height:54px;border-radius:14px;display:grid;place-items:center;margin:0 auto 18px;background:rgba(179,136,255,.10);border:1px solid rgba(255,255,255,.08);font-size:28px}
+.card h3{font-size:20px;margin-bottom:10px}
+.card p{color:var(--mut);font-size:15px}
+.moments-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.moment{border:1px solid rgba(255,255,255,.08);border-radius:20px;overflow:hidden;background:var(--panel);transition:transform .25s,border-color .25s;text-align:center;padding:30px 22px}
+.moment:hover{transform:translateY(-6px);border-color:rgba(179,136,255,.25)}
+.moment .icon{font-size:50px;margin-bottom:16px;display:block}
+.moment h3{font-size:19px;margin:8px 0 6px}
+.moment p{color:var(--mut);font-size:14px}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.pstep{padding:28px 24px;border:1px solid rgba(255,255,255,.08);border-radius:18px;background:var(--panel);text-align:center}
+.pstep .n{font-family:var(--display);font-weight:800;font-size:15px;width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:var(--grad);color:#0a0a12;margin:0 auto 16px}
+.pstep h3{font-size:18px;margin-bottom:8px}.pstep p{color:var(--mut);font-size:14px}
+.contact{border:1px solid rgba(255,255,255,.08);border-radius:28px;background:linear-gradient(160deg,rgba(179,136,255,.06),rgba(255,171,145,.04));padding:56px;display:grid;grid-template-columns:1fr 1fr;gap:46px;align-items:center;backdrop-filter:blur(10px)}
+.contact h2{font-size:clamp(26px,3.4vw,40px)}
+.contact p{color:var(--mut);font-size:17px;margin-top:14px}
+.contact .chan{margin-top:24px;display:flex;flex-direction:column;gap:10px;font-weight:600}
+.contact .chan a{color:var(--txt)}.contact .chan a:hover{color:var(--lavender)}
+form .field{margin-bottom:14px}
+form input,form textarea{width:100%;padding:15px 16px;border-radius:13px;border:1px solid rgba(255,255,255,.08);background:rgba(0,0,0,.25);color:var(--txt);font-family:var(--body);font-size:15px}
+form input:focus,form textarea:focus{outline:none;border-color:var(--lavender)}
+form .consent{display:flex;align-items:flex-start;gap:10px;font-size:13px;color:var(--mut);margin:6px 0 16px}
+form .consent input{flex:0 0 auto;width:18px;height:18px;margin:2px 0 0;padding:0}
+.faq details{border:1px solid rgba(255,255,255,.08);border-radius:16px;background:var(--panel);margin-bottom:14px;padding:4px 24px}
+.faq summary{font-family:var(--display);font-weight:600;font-size:17px;padding:18px 0;cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:16px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary:after{content:'💜';color:var(--lavender);font-size:18px;line-height:1}
+.faq details[open] summary:after{content:'🌸'}
+.faq details p{color:var(--mut);padding:0 0 20px}
+footer{border-top:1px solid rgba(255,255,255,.05);padding:46px 0 34px;margin-top:40px}
+.foot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:24px;color:var(--mut);font-size:14px}
+.foot a:hover{color:var(--lavender)}
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+#progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--grad);z-index:200;box-shadow:0 0 12px rgba(124,109,240,.4)}
+.star-rain{position:fixed;top:-10px;font-size:16px;animation:fall linear infinite;z-index:0;pointer-events:none;opacity:.3}
+@keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
+@media(max-width:900px){
+  nav.menu,.nav .btn.desk{display:none}
+  .burger{display:block}
+  .stats{grid-template-columns:1fr 1fr}
+  .cards,.moments-grid,.steps{grid-template-columns:1fr}
+  .steps{grid-template-columns:1fr 1fr}
+  .contact{grid-template-columns:1fr;padding:32px}
+  .cursor-glow{display:none}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important}.reveal{opacity:1!important;transform:none!important}}
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+<div class="bgfx"></div>
+<div class="blob b1"></div>
+<div class="blob b2"></div>
+<div class="blob b3"></div>
+<div class="grid-ov"></div>
+<div class="cursor-glow" id="glow"></div>
+
+<div id="stars-container"></div>
+
+<header id="hdr">
+  <div class="wrap nav">
+    <a class="logo" href="#"><span class="mark">💜</span><span>Для Ани<small>от Коли</small></span></a>
+    <nav class="menu">
+      <a href="#why">Ты — моя сестра</a>
+      <a href="#moments">Наши моменты</a>
+      <a href="#qualities">За что я люблю</a>
+      <a href="#wishes">Мои пожелания</a>
+      <a href="#letter">Письмо</a>
+    </nav>
+    <a class="btn btn-primary desk" href="#letter">💜 Написать</a>
+    <button class="burger" onclick="document.getElementById('mm').classList.toggle('open')">☰</button>
+  </div>
+  <div class="wrap"><div class="mobmenu" id="mm" onclick="this.classList.remove('open')">
+    <a href="#why">Ты — моя сестра</a>
+    <a href="#moments">Наши моменты</a>
+    <a href="#qualities">За что я люблю</a>
+    <a href="#wishes">Мои пожелания</a>
+    <a href="#letter">Письмо</a>
+  </div></div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap">
+    <span class="eyebrow reveal">💜 Для моей сестры Ани</span>
+    <h1 class="reveal">Ты — моя <span class="grad">сестра</span></h1>
+    <p class="lead reveal">Аня, этот сайт — для тебя. Чтобы ты знала: ты — самая важная и дорогая сестра на свете. Я люблю тебя, сестрёнка!</p>
+    <div class="cta reveal">
+      <a class="btn btn-primary" href="#letter">💜 Написать</a>
+      <a class="btn btn-ghost" href="#why">Узнать больше</a>
+    </div>
+
+    <div class="heromock reveal">
+      <div class="bar"><i></i><i></i><i></i></div>
+      <svg viewBox="0 0 1120 600" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#b388ff"/><stop offset="0.5" stop-color="#7c6df0"/><stop offset="1" stop-color="#ffab91"/>
+          </linearGradient>
+          <filter id="soft" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="55"/></filter>
+        </defs>
+        <rect width="1120" height="600" fill="#0b0b16"/>
+        <circle cx="770" cy="190" r="180" fill="#7c6df0" opacity="0.15" filter="url(#soft)"/>
+        <circle cx="300" cy="440" r="150" fill="#b388ff" opacity="0.12" filter="url(#soft)"/>
+        
+        <!-- Две фигуры — Коля и Аня -->
+        <circle cx="420" cy="300" r="60" fill="url(#g1)" opacity="0.15"/>
+        <circle cx="700" cy="300" r="60" fill="url(#g1)" opacity="0.15"/>
+        
+        <circle cx="420" cy="300" r="40" fill="url(#g1)" opacity="0.3"/>
+        <circle cx="700" cy="300" r="40" fill="url(#g1)" opacity="0.3"/>
+        
+        <circle cx="420" cy="300" r="25" fill="url(#g1)" opacity="0.6"/>
+        <circle cx="700" cy="300" r="25" fill="url(#g1)" opacity="0.6"/>
+        
+        <!-- Сердечко между ними -->
+        <path d="M540,280 C530,260 500,265 500,285 C500,305 540,330 540,330 C540,330 580,305 580,285 C580,265 550,260 540,280 Z" fill="url(#g1)" opacity="0.7"/>
+        
+        <!-- Звёздочки -->
+        <text x="200" y="150" font-size="30" fill="#b388ff" opacity="0.5">✦</text>
+        <text x="850" y="140" font-size="24" fill="#ffab91" opacity="0.4">✦</text>
+        <text x="150" y="420" font-size="20" fill="#7c6df0" opacity="0.3">✦</text>
+        <text x="950" y="440" font-size="28" fill="#b388ff" opacity="0.4">✦</text>
+
+        <rect x="350" y="460" width="420" height="60" rx="14" fill="#11111f"/>
+        <rect x="350" y="460" width="420" height="60" rx="14" fill="#ffffff" opacity="0.04"/>
+        <rect x="350" y="460" width="420" height="60" rx="14" fill="none" stroke="#ffffff" stroke-opacity="0.06"/>
+        <text x="560" y="498" font-family="Sora,sans-serif" font-size="22" font-weight="700" fill="url(#g1)" text-anchor="middle">Коля 🤝 Аня — навсегда 💜</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- СТАТИСТИКА -->
+<section style="padding-top:20px">
+  <div class="wrap">
+    <div class="stats">
+      <div class="stat reveal"><b style="font-size:28px">♾️</b><span>наша связь</span></div>
+      <div class="stat reveal"><b style="font-size:28px">💜</b><span>ты — моя опора</span></div>
+      <div class="stat reveal"><b style="font-size:28px">🌟</b><span>ты — моя сестра</span></div>
+      <div class="stat reveal"><b style="font-size:28px">🌸</b><span>самая добрая</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ТЫ — МОЯ СЕСТРА -->
+<section id="why">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">💜 Ты особенная, Аня</span>
+      <h2>Ты — <span class="grad">моя сестра</span></h2>
+      <p>Ты — самый родной человек в моей жизни. Вот почему я так тебя ценю.</p>
+    </div>
+    <div class="cards">
+      <div class="card reveal"><div class="ico">💖</div><h3>Ты — моя опора</h3><p>Ты всегда рядом, когда мне нужна поддержка. С тобой я чувствую себя в безопасности, Ань.</p></div>
+      <div class="card reveal"><div class="ico">🌞</div><h3>Ты светишь</h3><p>Твоя улыбка освещает комнату. Ты делаешь мир вокруг себя теплее и добрее.</p></div>
+      <div class="card reveal"><div class="ico">🤗</div><h3>Ты понимаешь</h3><p>Ты знаешь меня лучше всех. С тобой я могу быть собой, без масок и притворства.</p></div>
+      <div class="card reveal"><div class="ico">💪</div><h3>Ты сильная</h3><p>Ты справляешься с трудностями с удивительной силой. Ты — пример для меня.</p></div>
+      <div class="card reveal"><div class="ico">🎨</div><h3>Ты талантливая</h3><p>Ты делаешь мир красивее. Твой вкус и творческий подход вдохновляют меня.</p></div>
+      <div class="card reveal"><div class="ico">❤️</div><h3>Ты — моя семья</h3><p>Ты — часть меня. Кровная связь, которая никогда не оборвётся, что бы ни случилось.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- НАШИ МОМЕНТЫ -->
+<section id="moments">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">✨ Наши моменты, Аня</span>
+      <h2>Воспоминания, которые <span class="grad">я храню</span></h2>
+      <p>Каждый миг с тобой — это сокровище. Вот самые тёплые из них.</p>
+    </div>
+    <div class="moments-grid">
+      <div class="moment reveal">
+        <span class="icon">🎄</span>
+        <h3>Новогодние праздники</h3>
+        <p>Помнишь, как мы сидели за столом, смеялись, дарили подарки и встречали Новый год всей семьёй? Это были лучшие вечера.</p>
+      </div>
+      <div class="moment reveal">
+        <span class="icon">🎂</span>
+        <h3>Наши дни рождения</h3>
+        <p>Твои и мои праздники, когда мы собирались вместе, задували свечи и загадывали желания. Я всегда радовался твоим подаркам.</p>
+      </div>
+      <div class="moment reveal">
+        <span class="icon">🚶‍♀️</span>
+        <h3>Наши прогулки</h3>
+        <p>Как мы гуляли по парку, по городу, просто разговаривали о чём-то важном и не очень. Эти тихие моменты — самые дорогие.</p>
+      </div>
+      <div class="moment reveal">
+        <span class="icon">🎮</span>
+        <h3>Игры вместе</h3>
+        <p>Наши совместные игры — в настолки, в приставку, в телефоне. Сколько было смеха и азарта! Мы всегда были командой.</p>
+      </div>
+      <div class="moment reveal">
+        <span class="icon">🍕</span>
+        <h3>Семейные ужины</h3>
+        <p>Когда мы все сидели за одним столом, болтали, ели вкусную еду и чувствовали себя по-настоящему семьёй. Это было счастье.</p>
+      </div>
+      <div class="moment reveal">
+        <span class="icon">☕</span>
+        <h3>Наши разговоры по душам</h3>
+        <p>Чаепития до полуночи, когда мы делились самым сокровенным. Таких моментов больше ни с кем нет, Ань.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ЗА ЧТО Я ЛЮБЛЮ АНЮ -->
+<section id="qualities">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">💕 За что я люблю тебя, Аня</span>
+      <h2>Твои <span class="grad">качества</span></h2>
+      <p>Ты не просто сестра — ты человек с огромным сердцем и прекрасной душой.</p>
+    </div>
+    <div class="moments-grid">
+      <div class="moment reveal">
+        <span class="icon">💝</span>
+        <h3>Твоё доброе сердце</h3>
+        <p>Ты всегда готова помочь, поддержать и обнять. В тебе столько тепла, что его хватит на всех.</p>
+      </div>
+      <div class="moment reveal">
+        <span class="icon">🧠</span>
+        <h3>Твой ум</h3>
+        <p>Ты умная, рассудительная и всегда даёшь лучшие советы. Я горжусь тобой, Аня.</p>
+      </div>
+      <div class="moment reveal">
+        <span class="icon">😂</span>
+        <h3>Твоё чувство юмора</h3>
+        <p>С тобой никогда не бывает скучно. Ты умеешь поднять настроение одной шуткой.</p>
+      </div>
+      <div class="moment reveal">
+        <span class="icon">🌟</span>
+        <h3>Твоя уверенность</h3>
+        <p>Ты знаешь, чего хочешь, и идёшь к своей цели. Это вдохновляет.</p>
+      </div>
+      <div class="moment reveal">
+        <span class="icon">🤝</span>
+        <h3>Твоя верность</h3>
+        <p>Ты всегда рядом, в хорошие и плохие времена. Я знаю — ты не предашь.</p>
+      </div>
+      <div class="moment reveal">
+        <span class="icon">💫</span>
+        <h3>Твоя уникальность</h3>
+        <p>Ты — одна такая. Неповторимая, особенная. В мире нет второго такого человека, как ты, Аня.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- МОИ ПОЖЕЛАНИЯ -->
+<section id="wishes">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">💜 Мои пожелания</span>
+      <h2>Что я <span class="grad">желаю тебе</span></h2>
+      <p>Аня, эти слова идут от самого сердца. Пусть они согревают тебя каждый день.</p>
+    </div>
+    <div class="steps">
+      <div class="pstep reveal"><div class="n">💜</div><h3>Счастья</h3><p>Пусть каждый день приносит тебе радость, улыбки и тёплые моменты. Ты заслуживаешь самого лучшего.</p></div>
+      <div class="pstep reveal"><div class="n">🌟</div><h3>Успеха</h3><p>Пусть все твои мечты сбываются, а цели достигаются легко. Я верю в тебя, сестрёнка.</p></div>
+      <div class="pstep reveal"><div class="n">💪</div><h3>Силы</h3><p>Пусть у тебя всегда будут силы преодолевать любые трудности. Ты сильная, я знаю.</p></div>
+      <div class="pstep reveal"><div class="n">❤️</div><h3>Любви</h3><p>Пусть в твоей жизни будет много любви — от семьи, друзей и близких. Ты достойна её.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ПИСЬМО КОЛИ АНЕ -->
+<section id="letter">
+  <div class="wrap">
+    <div class="contact reveal">
+      <div>
+        <span class="eyebrow">💌 Письмо от Коли</span>
+        <h2>Для моей <span class="grad">Ани</span></h2>
+        <p style="font-size:17px;line-height:1.8;font-style:italic;color:var(--txt)">
+          «Аня, моя родная сестрёнка!<br><br>
+
+          Я хочу, чтобы ты знала: ты — самый важный человек в моей жизни. Ты — моя сестра, моя подруга, моя опора.<br><br>
+
+          Я желаю тебе самого главного — счастья. Пусть каждый твой день начинается с улыбки и заканчивается тёплыми воспоминаниями. Пусть все твои мечты сбываются, даже самые смелые. Ты этого достойна.<br><br>
+
+          Я желаю тебе сил. Ты всегда была сильной, но иногда можно позволить себе быть слабой. Я всегда рядом, чтобы поддержать тебя.<br><br>
+
+          Я желаю тебе любви. Пусть в твоей жизни будет много тёплых объятий, искренних слов и людей, которые ценят тебя так же, как я.<br><br>
+
+          Ты — моя гордость. Я всегда восхищался тобой, твоей добротой, умом и красотой. Ты делаешь этот мир лучше, Ань.<br><br>
+
+          Спасибо, что ты есть. За все наши моменты — праздники, прогулки, игры, разговоры. За то, что ты всегда была и есть рядом.<br><br>
+
+          Будь счастлива, моя родная. Ты заслуживаешь самого лучшего в этом мире. 💜<br><br>
+
+          Твой брат, Коля»
+        </p>
+        <div class="chan" style="margin-top:24px">
+          <span>💜 Твой брат, Коля</span>
+        </div>
+      </div>
+      <div>
+        <form onsubmit="alert('💜 Аня, спасибо! Ты — лучшая сестра на свете!'); return false;">
+          <div style="text-align:center;margin-bottom:20px">
+            <span style="font-size:50px;display:block">💜</span>
+            <h3 style="font-size:22px;margin-top:10px">Аня, ты здесь</h3>
+          </div>
+          <div class="field"><input name="name" placeholder="Твоё имя" value="Аня" required></div>
+          <div class="field"><textarea name="comment" rows="3" placeholder="Напиши что-нибудь, сестрёнка... или просто поставь 💜"></textarea></div>
+          <button class="btn btn-primary" type="submit" style="width:100%;font-size:18px">💜 Я люблю тебя, Аня</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ВОПРОСЫ -->
+<section id="faq">
+  <div class="wrap" style="max-width:840px">
+    <div class="sec-head reveal">
+      <span class="eyebrow">💜 Аня спросит</span>
+      <h2>Коля <span class="grad">ответит</span></h2>
+    </div>
+    <div class="faq reveal">
+      <details><summary>Почему ты сделал этот сайт для меня, Коля?</summary><p>Потому что хочу, чтобы ты знала: ты — самая важная сестра на свете. Ты заслуживаешь всех звёзд, и это лишь малая часть того, что я чувствую, Аня.</p></details>
+      <details><summary>Что во мне самое лучшее?</summary><p>Твоё сердце. Ты умеешь любить, заботиться и дарить тепло. Ты — самый добрый человек, которого я знаю.</p></details>
+      <details><summary>Я для тебя важна?</summary><p>Важнее всех. Ты — моя сестра, моя подруга, моя семья. Ты — часть меня, и я всегда буду рядом, Аня.</p></details>
+      <details><summary>Что я значу для тебя?</summary><p>Ты — свет в моей жизни. Ты — воспоминания, поддержка, улыбка. Ты — мой дом, сестрёнка.</p></details>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot">
+    <div>
+      <b style="font-family:var(--display)">💜 Коля 🤝 Аня</b><br>
+      <span class="muted">С любовью, твой брат · 2026</span>
+    </div>
+    <div style="display:flex;gap:22px;flex-wrap:wrap">
+      <a href="#why">Ты — моя сестра</a>
+      <a href="#moments">Моменты</a>
+      <a href="#qualities">Качества</a>
+      <a href="#letter">Письмо</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* === Падающие звёздочки === */
+(function(){
+  var container = document.getElementById('stars-container');
+  if(!container) return;
+  var stars = ['✦','🌟','⭐','✨','💫','✧'];
+  for(var i=0;i<20;i++){
+    var el = document.createElement('div');
+    el.className = 'star-rain';
+    el.textContent = stars[Math.floor(Math.random()*stars.length)];
+    el.style.left = Math.random()*100 + '%';
+    el.style.fontSize = (14 + Math.random()*18) + 'px';
+    el.style.animationDuration = (10 + Math.random()*18) + 's';
+    el.style.animationDelay = (Math.random()*20) + 's';
+    el.style.opacity = 0.15 + Math.random()*0.25;
+    container.appendChild(el);
+  }
+})();
+
+/* === Свечение за курсором === */
+(function(){
+  var g=document.getElementById('glow'); if(!g) return;
+  if(window.matchMedia && window.matchMedia('(pointer:coarse)').matches){ g.style.display='none'; return; }
+  var x=innerWidth/2,y=innerHeight/2,cx=x,cy=y;
+  document.addEventListener('mousemove',function(e){x=e.clientX;y=e.clientY;});
+  (function loop(){ cx+=(x-cx)*0.12; cy+=(y-cy)*0.12; g.style.left=cx+'px'; g.style.top=cy+'px'; requestAnimationFrame(loop); })();
+})();
+
+/* === Шапка === */
+(function(){
+  var h=document.getElementById('hdr');
+  function onScroll(){ if(window.scrollY>10) h.classList.add('scrolled'); else h.classList.remove('scrolled'); }
+  onScroll(); window.addEventListener('scroll',onScroll,{passive:true});
+})();
+
+/* === Появление при скролле === */
+(function(){
+  var els=document.querySelectorAll('.reveal');
+  if(!('IntersectionObserver' in window)){ els.forEach(function(e){e.classList.add('in');}); return; }
+  var io=new IntersectionObserver(function(en){ en.forEach(function(x){ if(x.isIntersecting){ x.target.classList.add('in'); io.unobserve(x.target); } }); },{threshold:0.12});
+  els.forEach(function(e){ io.observe(e); });
+})();
+
+/* === Прогресс === */
+(function(){var p=document.getElementById('progress');if(!p)return;function u(){var h=document.documentElement,sc=h.scrollTop||document.body.scrollTop,max=h.scrollHeight-h.clientHeight;p.style.width=(max>0?sc/max*100:0)+'%';}u();addEventListener('scroll',u,{passive:true});addEventListener('resize',u);})();
+
+/* === 3D-наклон === */
+(function(){
+  if(matchMedia('(prefers-reduced-motion:reduce)').matches||matchMedia('(pointer:coarse)').matches)return;
+  document.querySelectorAll('.card,.moment,.pstep').forEach(function(el){
+    el.addEventListener('mousemove',function(e){var r=el.getBoundingClientRect();var px=(e.clientX-r.left)/r.width-.5,py=(e.clientY-r.top)/r.height-.5;el.style.transform='perspective(900px) rotateX('+(-py*5)+'deg) rotateY('+(px*5)+'deg) translateY(-6px)';});
+    el.addEventListener('mouseleave',function(){el.style.transform='';});
+  });
+  document.querySelectorAll('.btn-primary').forEach(function(b){
+    b.addEventListener('mousemove',function(e){var r=b.getBoundingClientRect();b.style.transform='translate('+((e.clientX-r.left)/r.width-.5)*8+'px,'+((e.clientY-r.top)/r.height-.5)*8+'px)';});
+    b.addEventListener('mouseleave',function(){b.style.transform='';});
+  });
+})();
+
+/* === Параллакс === */
+(function(){var m=document.querySelector('.heromock');if(!m||matchMedia('(pointer:coarse)').matches)return;m.style.transition='transform .25s ease-out';addEventListener('mousemove',function(e){var x=e.clientX/innerWidth-.5,y=e.clientY/innerHeight-.5;m.style.transform='perspective(1200px) rotateX('+(-y*2.5)+'deg) rotateY('+(x*2.5)+'deg)';});})();
+</script>
+</body>
+</html>
